@@ -24,8 +24,8 @@ Databases
 - Tool DB Name: aspnet-AdvantageTool-53bc9b9d-9d6a-45d4-8429-2a2761773502
 
 Users
-- Platform User: platform@user.com | Password: 1-9
-- Tool User: tool@user.com | Password: 1-9
+- Platform User: platform@user.com | Password: 12...90
+- Tool User: tool@user.com | Password: 12...90
 
 URLs
 - Platform URL: https://localhost:44338/
@@ -39,6 +39,10 @@ On my case, I am running SQL Server on docker, so, to get it to work right away:
    -d mcr.microsoft.com/mssql/server:2019-latest```
 
 Ref: https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15&pivots=cs1-powershell
+
+### DotnetCore
+ASPNET Core 2.2.8 is required. Otherwise, the app may thrown 502 errors on you.
+
 
 ## Original references
 - LtiAdvantagePlatform – Sample LTI Advantage Platform using ASP.NET Core. https://github.com/andyfmiller/LtiAdvantagePlatform

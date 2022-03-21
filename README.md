@@ -19,21 +19,24 @@ In case you just want to see it working, there is a SampleData folder with both 
 Check appsettings.json
 
 ### Data
-Platform DB Name: aspnet-AdvantagePlatform-53bc9b9d-9d6a-45d4-8429-2a2761773502
-Tool DB Name: aspnet-AdvantageTool-53bc9b9d-9d6a-45d4-8429-2a2761773502
+Databases
+- Platform DB Name: aspnet-AdvantagePlatform-53bc9b9d-9d6a-45d4-8429-2a2761773502
+- Tool DB Name: aspnet-AdvantageTool-53bc9b9d-9d6a-45d4-8429-2a2761773502
 
-Platform User: platform@user.com | Password: 1-9
-Tool User: tool@user.com | Password: 1-9
+Users
+- Platform User: platform@user.com | Password: 1-9
+- Tool User: tool@user.com | Password: 1-9
 
-Platform URL: https://localhost:44338/
-Tool URL: https://localhost:44308/
+URLs
+- Platform URL: https://localhost:44338/
+- Tool URL: https://localhost:44308/
 
 ### SQL Server
 On my case, I am running SQL Server on docker, so, to get it to work right away:
 
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong@Passw0rd" `
+```docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong@Passw0rd" `
    -p 1433:1433 --name sql1 --hostname sql1 `
-   -d mcr.microsoft.com/mssql/server:2019-latest
+   -d mcr.microsoft.com/mssql/server:2019-latest```
 
 Ref: https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15&pivots=cs1-powershell
 

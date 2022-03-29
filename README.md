@@ -1,3 +1,9 @@
+# With Identity Server 4
+You probably don't need this. But, just in case, if you find yourself in need to debug Identity Server code, here it is.
+What this branch differs from the main is basically the addition of Identity Server 4 source code. The version used is 2.3.2, the same referred in the AvantagePlatform project. Everything compiles and IS is debuggable.
+
+Enjoy it!
+
 # LTI Advantage
 ## Fully fixed and compiling LTI Advantage Libraries for .NET fork
 

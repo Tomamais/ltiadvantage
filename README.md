@@ -48,3 +48,5 @@ ASPNET Core 2.2.8 is required. Otherwise, the app may thrown 502 errors on you.
 - LtiAdvantagePlatform – Sample LTI Advantage Platform using ASP.NET Core. https://github.com/andyfmiller/LtiAdvantagePlatform
 - LtiAdvantageTool – Sample LTI Advantage Tool using ASP.NET Core. https://github.com/andyfmiller/LtiAdvantageTool
 - LtiAdvantage – ASP.NET Core library for both platforms and tools. https://github.com/LtiLibrary/LtiAdvantage.git
+
+# ATTENTION! DO YOU NEED TO DEBUG IDENTITY SERVER 4 FOR ANY REASION? CHECK THIS: https://github.com/Tomamais/ltiadvantage/tree/with_identityserver4

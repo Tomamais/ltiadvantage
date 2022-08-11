@@ -26,6 +26,7 @@ namespace AdvantageTool.Pages
     [IgnoreAntiforgeryToken]
     public class ToolModel : PageModel
     {
+        private static JsonWebKeySet _oauth2CertsCache;
         private readonly ApplicationDbContext _context;
         private readonly StateDbContext _stateContext;
         private readonly AccessTokenService _accessTokenService;
@@ -62,6 +63,25 @@ namespace AdvantageTool.Pages
         /// Wrapper around the request payload.
         /// </summary>
         public LtiResourceLinkRequest LtiRequest { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string platformId)
+        {
+            if (_oauth2CertsCache == null)
+            {
+                // Look for the platform with platformId in the redirect URI
+                var platform = await _context.GetPlatformByPlatformId(platformId);
+
+                if (platform == null)
+                {
+                    Error = "Unknown platform.";
+                    return Page();
+                }
+                _oauth2CertsCache = PemHelper.GetJsonWebKeySetFromPrivateKey(platform.PrivateKey);
+            }
+
+            if (Request.Headers.ContainsKey("Origin")) Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            return new JsonResult(_oauth2CertsCache);
+        }
 
         /// <summary>
         /// Handle the LTI POST request from the Authorization Server. 

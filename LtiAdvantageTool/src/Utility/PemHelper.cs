@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 using IdentityModel;
 using Microsoft.IdentityModel.Tokens;
@@ -101,6 +102,7 @@ namespace AdvantageTool.Utility
                     Exponent = keyParameters.PublicExponent.ToByteArrayUnsigned()
                 };
                 var key = new RsaSecurityKey(parameters);
+                key.KeyId = "abcdefghijklmnopqrstuvwxyz";
                 return new SigningCredentials(key, SecurityAlgorithms.RsaSha256);
             }  
         }
@@ -121,6 +123,36 @@ namespace AdvantageTool.Utility
                     Exponent = keyParameters.Exponent.ToByteArrayUnsigned()
                 };
                 return new RsaSecurityKey(parameters);
+            }
+        }
+
+        public static JsonWebKeySet GetJsonWebKeySetFromPrivateKey(string privateKey)
+        {
+            using (var keyTextReader = new StringReader(privateKey))
+            {
+                var cipherKeyPair = (AsymmetricCipherKeyPair)new PemReader(keyTextReader).ReadObject();
+
+                RsaKeyParameters KeyParameters = (RsaKeyParameters)cipherKeyPair.Public;
+                var e = Base64UrlEncoder.Encode(KeyParameters.Exponent.ToByteArrayUnsigned());
+                var n = Base64UrlEncoder.Encode(KeyParameters.Modulus.ToByteArrayUnsigned());
+                var dict = new System.Collections.Generic.Dictionary<string, string>() {
+                    {"e", e},
+                    {"kty", "RSA"},
+                    {"n", n}
+                };
+                var hash = SHA256.Create();
+                Byte[] hashBytes = hash.ComputeHash(System.Text.Encoding.ASCII.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(dict)));
+                JsonWebKey jsonWebKey = new JsonWebKey()
+                {
+                    Kid = Base64UrlEncoder.Encode(hashBytes),
+                    Kty = "RSA",
+                    E = e,
+                    N = n
+                };
+                JsonWebKeySet jsonWebKeySet = new JsonWebKeySet();
+                jsonWebKeySet.Keys.Add(jsonWebKey);
+
+                return jsonWebKeySet;
             }
         }
     }
